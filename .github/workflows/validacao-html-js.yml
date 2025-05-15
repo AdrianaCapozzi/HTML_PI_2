@@ -1,0 +1,33 @@
+name: Validação HTML e JS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  validar-codigo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar o repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Instalar HTMLHint e ESLint
+        run: |
+          npm install -g htmlhint eslint
+
+      - name: Rodar HTMLHint
+        run: |
+          htmlhint "**/*.html"
+
+      - name: Rodar ESLint
+        run: |
+          eslint js/
+
